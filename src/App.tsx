@@ -11,6 +11,8 @@ import Restaurants from "./pages/Restaurants";
 import Profile from "./pages/Profile";
 import Chefs from "./pages/Chefs";
 import ChefDetails from "./pages/ChefDetails";
+import Inbox from "./pages/Inbox";
+import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +31,8 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/chefs" element={<Chefs />} />
           <Route path="/chefs/:id" element={<ChefDetails />} />
+          <Route path="/inbox" element={<Inbox />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

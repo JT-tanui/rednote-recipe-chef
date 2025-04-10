@@ -1,10 +1,15 @@
 
+import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
 import RestaurantCard from '@/components/ui/restaurant-card/RestaurantCard';
 import ChefCard from '@/components/ui/chef-card/ChefCard';
 import DiscoveryFeed from '@/components/feed/DiscoveryFeed';
+import DiscoveryCategorySelector from '@/components/feed/DiscoveryCategorySelector';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+type CategoryType = 'all' | 'recipes' | 'restaurants' | 'chefs';
+type FeedType = 'for-you' | 'trending' | 'nearby';
 
 // Mock data for our feed
 const mockRecipes = [
@@ -70,8 +75,8 @@ const mockChefs = [
   }
 ];
 
-// Create feed items from our mock data
-const feedItems = [
+// For you feed items (personalized)
+const forYouItems = [
   ...mockRecipes.map(recipe => ({
     id: recipe.id,
     type: 'recipe' as const,
@@ -122,13 +127,144 @@ const feedItems = [
   }))
 ];
 
+// Trending feed items
+const trendingItems = [
+  {
+    id: 'trend1',
+    type: 'recipe' as const,
+    content: (
+      <div className="h-full bg-gradient-to-b from-gray-900/70 to-gray-900/95 flex items-center justify-center p-4">
+        <div className="w-full max-w-md animate-fade-in">
+          <RecipeCard 
+            id="trend-r1"
+            title="Viral Baked Feta Pasta"
+            image="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=2070"
+            duration="25 mins"
+            difficulty="Easy"
+            chef="Social Chef"
+            likes={15400}
+          />
+          <div className="mt-4 text-white">
+            <h2 className="text-lg font-semibold">Trending Recipe</h2>
+            <p className="text-xs text-gray-300 mt-1">Everyone is making this right now!</p>
+            <button className="mt-4 btn-primary w-full">View Recipe</button>
+          </div>
+        </div>
+      </div>
+    )
+  },
+  {
+    id: 'trend2',
+    type: 'restaurant' as const,
+    content: (
+      <div className="h-full bg-gradient-to-b from-gray-900/70 to-gray-900/95 flex items-center justify-center p-4">
+        <div className="w-full max-w-md animate-fade-in">
+          <RestaurantCard 
+            id="trend-r1"
+            name="La Petite Bistro"
+            image="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=2074"
+            rating={4.9}
+            cuisine="French"
+            location="Arts District"
+            priceRange="$$$$"
+          />
+          <div className="mt-4 text-white">
+            <h2 className="text-lg font-semibold">Hottest Restaurant</h2>
+            <p className="text-xs text-gray-300 mt-1">Book now before it's full for months</p>
+            <button className="mt-4 btn-secondary w-full">Make Reservation</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+];
+
+// Nearby feed items
+const nearbyItems = [
+  {
+    id: 'nearby1',
+    type: 'restaurant' as const,
+    content: (
+      <div className="h-full bg-gradient-to-b from-gray-900/70 to-gray-900/95 flex items-center justify-center p-4">
+        <div className="w-full max-w-md animate-fade-in">
+          <RestaurantCard 
+            id="nearby-r1"
+            name="Corner Café"
+            image="https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=2071"
+            rating={4.3}
+            cuisine="Café"
+            location="0.2 miles away"
+            priceRange="$"
+          />
+          <div className="mt-4 text-white">
+            <h2 className="text-lg font-semibold">Just Around the Corner</h2>
+            <p className="text-xs text-gray-300 mt-1">2 minute walk from your location</p>
+            <button className="mt-4 btn-secondary w-full">View Details</button>
+          </div>
+        </div>
+      </div>
+    )
+  },
+  {
+    id: 'nearby2',
+    type: 'chef' as const,
+    content: (
+      <div className="h-full bg-gradient-to-b from-gray-900/70 to-gray-900/95 flex items-center justify-center p-4">
+        <div className="w-full max-w-md animate-fade-in">
+          <ChefCard 
+            id="nearby-c1"
+            name="Alex Zhang"
+            image="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=1954"
+            specialty="Private Dining"
+            rating={4.7}
+            availability="Available Today"
+            hourlyRate="$80/hr"
+          />
+          <div className="mt-4 text-white">
+            <h2 className="text-lg font-semibold">Chef Near You</h2>
+            <p className="text-xs text-gray-300 mt-1">Available for same-day booking</p>
+            <button className="mt-4 btn-primary w-full">Book Chef</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+];
+
 const Index = () => {
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>('all');
+  const [activeTab, setActiveTab] = useState<FeedType>('for-you');
+
+  const handleCategoryChange = (category: CategoryType) => {
+    setSelectedCategory(category);
+  };
+
+  const getFilterType = () => {
+    if (selectedCategory === 'all') return null;
+    if (selectedCategory === 'recipes') return 'recipe' as const;
+    if (selectedCategory === 'restaurants') return 'restaurant' as const;
+    if (selectedCategory === 'chefs') return 'chef' as const;
+    return null;
+  };
+
+  const getCurrentFeedItems = () => {
+    switch (activeTab) {
+      case 'trending':
+        return trendingItems;
+      case 'nearby':
+        return nearbyItems;
+      case 'for-you':
+      default:
+        return forYouItems;
+    }
+  };
+
   return (
     <MainLayout>
       <div className="min-h-screen">
         <header className="bg-white dark:bg-gray-800 shadow-sm p-4 flex items-center justify-between">
           <h1 className="text-lg font-bold text-gradient">DineX</h1>
-          <Tabs defaultValue="for-you" className="w-auto">
+          <Tabs defaultValue={activeTab} onValueChange={(value) => setActiveTab(value as FeedType)} className="w-auto">
             <TabsList className="bg-gray-100 dark:bg-gray-700">
               <TabsTrigger value="for-you" className="text-xs">For You</TabsTrigger>
               <TabsTrigger value="trending" className="text-xs">Trending</TabsTrigger>
@@ -137,8 +273,13 @@ const Index = () => {
           </Tabs>
         </header>
         
+        <DiscoveryCategorySelector
+          selectedCategory={selectedCategory}
+          onSelectCategory={handleCategoryChange}
+        />
+        
         <section>
-          <DiscoveryFeed items={feedItems} />
+          <DiscoveryFeed items={getCurrentFeedItems()} filterType={getFilterType()} />
         </section>
       </div>
     </MainLayout>

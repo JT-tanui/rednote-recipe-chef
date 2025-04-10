@@ -4,7 +4,11 @@ import MainLayout from '@/components/layout/MainLayout';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CalendarDays, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
+import { 
+  CalendarDays, Plus, ChevronLeft, ChevronRight, 
+  Utensils, MapPin, ChefHat, Users
+} from 'lucide-react';
+import { Avatar } from '@/components/ui/avatar';
 
 const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -39,9 +43,70 @@ const mealPlanData = {
   ],
 };
 
+// Mock reservations data
+const reservations = [
+  {
+    id: 'res1',
+    type: 'restaurant',
+    name: 'The Rustic Table',
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070',
+    date: 'Friday, April 15',
+    time: '7:30 PM',
+    guests: 4,
+    status: 'confirmed'
+  },
+  {
+    id: 'res2',
+    type: 'hotel',
+    name: 'Coastal Retreat Resort',
+    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070',
+    date: 'Sat, April 22 - Mon, April 24',
+    time: 'Check-in: 3:00 PM',
+    guests: 2,
+    status: 'pending'
+  },
+  {
+    id: 'res3',
+    type: 'outdoor',
+    name: 'Lakeside Picnic Area',
+    image: 'https://images.unsplash.com/photo-1520962880247-cfaf541c8724?q=80&w=2089',
+    date: 'Sunday, April 16',
+    time: '12:00 PM',
+    guests: 6,
+    status: 'confirmed'
+  }
+];
+
+// Mock service providers data
+const serviceProviders = [
+  {
+    id: 'chef1',
+    type: 'chef',
+    name: 'Maria Rodriguez',
+    image: 'https://images.unsplash.com/photo-1583394293214-28ded15ee548?q=80&w=2080',
+    specialty: 'French Cuisine',
+    rating: 4.9,
+    date: 'Saturday, April 22',
+    time: '6:00 PM',
+    status: 'confirmed'
+  },
+  {
+    id: 'nanny1',
+    type: 'nanny',
+    name: 'Sarah Johnson',
+    image: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=1974',
+    specialty: 'Child Care & Light Cooking',
+    rating: 4.8,
+    date: 'Monday, April 17',
+    time: '3:00 PM - 8:00 PM',
+    status: 'pending'
+  }
+];
+
 const MealPlanner = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [activeWeek, setActiveWeek] = useState<Date>(new Date());
+  const [activeTab, setActiveTab] = useState('week-view');
 
   const handlePreviousWeek = () => {
     const prevWeek = new Date(activeWeek);
@@ -75,16 +140,30 @@ const MealPlanner = () => {
 
   return (
     <MainLayout>
-      <div className="p-4 md:p-6 max-w-4xl mx-auto">
+      <div className="p-4 md:p-6 max-w-4xl mx-auto pb-20">
         <header className="mb-6">
-          <h1 className="text-xl font-bold">Meal Planner</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Plan your meals for the week</p>
+          <h1 className="text-xl font-bold">Planner</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Organize your meals, reservations, and services</p>
         </header>
 
-        <Tabs defaultValue="week-view" className="w-full">
-          <TabsList className="w-full">
-            <TabsTrigger value="week-view" className="flex-1 text-xs">Week View</TabsTrigger>
-            <TabsTrigger value="calendar-view" className="flex-1 text-xs">Calendar</TabsTrigger>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="w-full grid grid-cols-4">
+            <TabsTrigger value="week-view" className="flex-1 text-xs">
+              <Utensils className="w-3 h-3 mr-1" />
+              Meals
+            </TabsTrigger>
+            <TabsTrigger value="reservations" className="flex-1 text-xs">
+              <MapPin className="w-3 h-3 mr-1" />
+              Reservations
+            </TabsTrigger>
+            <TabsTrigger value="services" className="flex-1 text-xs">
+              <ChefHat className="w-3 h-3 mr-1" />
+              Services
+            </TabsTrigger>
+            <TabsTrigger value="calendar" className="flex-1 text-xs">
+              <CalendarDays className="w-3 h-3 mr-1" />
+              Calendar
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="week-view" className="mt-4">
@@ -161,7 +240,108 @@ const MealPlanner = () => {
             </div>
           </TabsContent>
           
-          <TabsContent value="calendar-view" className="mt-4">
+          <TabsContent value="reservations" className="mt-4">
+            <div className="space-y-4">
+              <h2 className="text-sm font-medium mb-3">Upcoming Reservations</h2>
+              
+              {reservations.map(reservation => (
+                <div key={reservation.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                  <div className="flex flex-col sm:flex-row">
+                    <div className="sm:w-1/3 h-24 sm:h-auto">
+                      <img 
+                        src={reservation.image} 
+                        alt={reservation.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-4 sm:w-2/3">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-sm font-semibold">{reservation.name}</h3>
+                        <span className={`text-xxs px-2 py-0.5 rounded-full ${
+                          reservation.status === 'confirmed' 
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
+                            : 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400'
+                        }`}>
+                          {reservation.status === 'confirmed' ? 'Confirmed' : 'Pending'}
+                        </span>
+                      </div>
+                      <div className="flex items-center text-xxs text-gray-600 dark:text-gray-300 mb-1">
+                        <CalendarDays size={12} className="mr-1" />
+                        {reservation.date}
+                      </div>
+                      <div className="flex items-center justify-between text-xxs text-gray-600 dark:text-gray-300">
+                        <div className="flex items-center">
+                          <Users size={12} className="mr-1" />
+                          {reservation.guests} guests
+                        </div>
+                        <div>{reservation.time}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              
+              <button className="w-full mt-4 btn-secondary text-sm flex items-center justify-center">
+                <Plus size={16} className="mr-1" />
+                Make New Reservation
+              </button>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="services" className="mt-4">
+            <div className="space-y-4">
+              <h2 className="text-sm font-medium mb-3">Booked Services</h2>
+              
+              {serviceProviders.map(provider => (
+                <div key={provider.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
+                  <div className="flex items-center">
+                    <Avatar className="h-12 w-12 mr-4">
+                      <img src={provider.image} alt={provider.name} className="object-cover" />
+                    </Avatar>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-sm font-semibold">{provider.name}</h3>
+                          <p className="text-xxs text-gray-600 dark:text-gray-300">{provider.specialty}</p>
+                        </div>
+                        <span className={`text-xxs px-2 py-0.5 rounded-full ${
+                          provider.status === 'confirmed' 
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
+                            : 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400'
+                        }`}>
+                          {provider.status === 'confirmed' ? 'Confirmed' : 'Pending'}
+                        </span>
+                      </div>
+                      <div className="mt-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+                        <div className="grid grid-cols-2 gap-1 text-xxs text-gray-600 dark:text-gray-300">
+                          <div className="flex items-center">
+                            <CalendarDays size={12} className="mr-1" />
+                            {provider.date}
+                          </div>
+                          <div className="flex justify-end">
+                            {provider.time}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              
+              <div className="grid grid-cols-2 gap-3 mt-4">
+                <button className="btn-primary text-xs flex items-center justify-center">
+                  <ChefHat size={14} className="mr-1" />
+                  Hire a Chef
+                </button>
+                <button className="btn-secondary text-xs flex items-center justify-center">
+                  <Users size={14} className="mr-1" />
+                  Hire a Nanny
+                </button>
+              </div>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="calendar" className="mt-4">
             <Card>
               <CardContent className="p-4">
                 <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">

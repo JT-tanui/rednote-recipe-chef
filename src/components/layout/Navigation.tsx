@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from 'react-router-dom';
-import { Home, CalendarDays, Utensils, MapPin, User } from 'lucide-react';
+import { Home, CalendarDays, Utensils, MapPin, User, Inbox } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Navigation = () => {
@@ -10,8 +10,8 @@ const Navigation = () => {
     { path: '/', label: 'Discover', icon: Home },
     { path: '/meal-planner', label: 'Planner', icon: CalendarDays },
     { path: '/recipes', label: 'Recipes', icon: Utensils },
-    { path: '/restaurants', label: 'Dining', icon: MapPin },
-    { path: '/chefs', label: 'Chefs', icon: User },
+    { path: '/inbox', label: 'Inbox', icon: Inbox },
+    { path: '/profile', label: 'Profile', icon: User },
   ];
 
   return (
