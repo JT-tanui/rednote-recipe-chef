@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Calendar, Star, Clock, MapPin, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -9,6 +9,8 @@ import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
 
 const ChefDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  
   const [chef] = useState({
     id,
     name: 'David Kim',
@@ -43,6 +45,11 @@ const ChefDetails = () => {
       likes: 356
     }
   ]);
+  
+  // Handle booking
+  const handleBookChef = () => {
+    navigate(`/booking?type=chef&id=${id}`);
+  };
 
   return (
     <MainLayout>
@@ -96,7 +103,7 @@ const ChefDetails = () => {
             
             <div className="mt-4">
               <span className="text-culinary-primary font-bold text-lg">{chef.hourlyRate}</span>
-              <Button className="w-full mt-3">Hire Chef</Button>
+              <Button className="w-full mt-3" onClick={handleBookChef}>Hire Chef</Button>
             </div>
           </div>
           
@@ -121,7 +128,7 @@ const ChefDetails = () => {
                   {['Private Dining', 'Meal Prep', 'Cooking Classes', 'Special Events'].map((service, index) => (
                     <div key={index} className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm flex justify-between items-center">
                       <span className="text-sm">{service}</span>
-                      <Button variant="outline" size="sm">Book</Button>
+                      <Button variant="outline" size="sm" onClick={() => navigate(`/booking?type=chef&id=${id}&service=${service}`)}>Book</Button>
                     </div>
                   ))}
                 </div>

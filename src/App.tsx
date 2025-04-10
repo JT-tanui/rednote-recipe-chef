@@ -14,6 +14,10 @@ import ChefDetails from "./pages/ChefDetails";
 import Inbox from "./pages/Inbox";
 import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
+import BookingPage from "./pages/BookingPage";
+import BookingSummary from "./pages/BookingSummary";
+import PaymentCheckout from "./pages/PaymentCheckout";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +37,13 @@ const App = () => (
           <Route path="/chefs/:id" element={<ChefDetails />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/onboarding" element={<Onboarding />} />
+          
+          {/* Booking Flow Routes */}
+          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/booking-summary" element={<BookingSummary />} />
+          <Route path="/payment-checkout" element={<PaymentCheckout />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
