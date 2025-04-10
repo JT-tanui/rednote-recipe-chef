@@ -11,7 +11,7 @@ const Navigation = () => {
     { path: '/meal-planner', label: 'Planner', icon: CalendarDays },
     { path: '/recipes', label: 'Recipes', icon: Utensils },
     { path: '/restaurants', label: 'Dining', icon: MapPin },
-    { path: '/profile', label: 'Profile', icon: User },
+    { path: '/chefs', label: 'Chefs', icon: User },
   ];
 
   return (

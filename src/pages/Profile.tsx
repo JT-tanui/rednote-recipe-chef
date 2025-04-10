@@ -1,160 +1,125 @@
 
+import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
+import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { Settings, Heart, Clock, Chef, CalendarDays } from 'lucide-react';
+import { Utensils, User, Settings, BookUser, CreditCard, Heart, Clock } from 'lucide-react';
 import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
 
-// Mock profile data
-const profileData = {
-  name: 'Alex Johnson',
-  username: '@alexjohnson',
-  avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974',
-  bio: 'Food enthusiast & home cook. Always looking for new recipes and restaurants to try!',
-  stats: {
-    recipes: 24,
-    saved: 87,
-    following: 156,
-    followers: 243
-  }
-};
-
-// Mock saved recipes
-const savedRecipes = [
-  {
-    id: 'sr1',
-    title: 'Spicy Thai Basil Chicken',
-    image: 'https://images.unsplash.com/photo-1569058242567-93de6f36f8eb?q=80&w=2070',
-    duration: '30 mins',
-    difficulty: 'Medium',
-    chef: 'Jamie Oliver',
-    likes: 1240
-  },
-  {
-    id: 'sr2',
-    title: 'Fresh Summer Salad',
-    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=2084',
-    duration: '15 mins',
-    difficulty: 'Easy',
-    chef: 'Nigella Lawson',
-    likes: 1560
-  },
-  {
-    id: 'sr3',
-    title: 'Chocolate Lava Cake',
-    image: 'https://images.unsplash.com/photo-1617026061250-62b474264442?q=80&w=1760',
-    duration: '35 mins',
-    difficulty: 'Medium',
-    chef: 'Mary Berry',
-    likes: 2300
-  },
-];
-
 const Profile = () => {
+  const [user] = useState({
+    name: 'Jane Smith',
+    email: 'jane.smith@example.com',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974',
+    bio: 'Food enthusiast and home cook passionate about experimenting with new flavors and cuisines.',
+  });
+
+  // Mock saved recipes
+  const savedRecipes = [
+    {
+      id: 'saved1',
+      title: 'Homemade Pasta Carbonara',
+      image: 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?q=80&w=2035',
+      duration: '35 mins',
+      difficulty: 'Medium',
+      chef: 'Marco Rossi',
+      likes: 342
+    },
+    {
+      id: 'saved2',
+      title: 'Avocado Toast with Poached Eggs',
+      image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=2080',
+      duration: '15 mins',
+      difficulty: 'Easy',
+      chef: 'Sarah Lee',
+      likes: 289
+    }
+  ];
+
   return (
     <MainLayout>
-      <div className="p-4 md:p-6 max-w-4xl mx-auto">
-        <header className="flex justify-end mb-4">
-          <Button variant="ghost" size="sm" className="text-gray-500">
-            <Settings size={18} />
+      <div className="container max-w-md mx-auto px-4 pt-5 pb-20">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-xl font-bold">Profile</h1>
+          <Button variant="ghost" size="icon">
+            <Settings size={20} />
           </Button>
-        </header>
-        
-        <section className="flex flex-col items-center mb-6">
-          <Avatar className="h-20 w-20 mb-4">
-            <AvatarImage src={profileData.avatar} alt={profileData.name} />
-            <AvatarFallback>{profileData.name.charAt(0)}</AvatarFallback>
+        </div>
+
+        <div className="flex flex-col items-center mb-6">
+          <Avatar className="w-20 h-20 mb-3">
+            <AvatarImage src={user.avatar} alt={user.name} />
+            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
           </Avatar>
-          
-          <h1 className="text-lg font-bold">{profileData.name}</h1>
-          <p className="text-xs text-gray-500 mb-2">{profileData.username}</p>
-          
-          <p className="text-sm text-center max-w-xs mb-4">{profileData.bio}</p>
-          
-          <div className="flex divide-x divide-gray-200 dark:divide-gray-700">
-            <div className="px-4 text-center">
-              <p className="text-sm font-semibold">{profileData.stats.recipes}</p>
-              <p className="text-xxs text-gray-500">Recipes</p>
-            </div>
-            <div className="px-4 text-center">
-              <p className="text-sm font-semibold">{profileData.stats.saved}</p>
-              <p className="text-xxs text-gray-500">Saved</p>
-            </div>
-            <div className="px-4 text-center">
-              <p className="text-sm font-semibold">{profileData.stats.following}</p>
-              <p className="text-xxs text-gray-500">Following</p>
-            </div>
-            <div className="px-4 text-center">
-              <p className="text-sm font-semibold">{profileData.stats.followers}</p>
-              <p className="text-xxs text-gray-500">Followers</p>
-            </div>
-          </div>
-          
-          <div className="flex space-x-2 mt-6">
-            <Button className="text-xs h-8 bg-culinary-primary text-white hover:bg-culinary-primary/90">
-              Edit Profile
-            </Button>
-            <Button variant="outline" className="text-xs h-8">
-              Share Profile
-            </Button>
-          </div>
-        </section>
-        
+          <h2 className="text-lg font-semibold">{user.name}</h2>
+          <p className="text-sm text-gray-500">{user.email}</p>
+          <p className="text-xs text-center text-gray-600 mt-2 max-w-xs">{user.bio}</p>
+          <Button className="mt-4" size="sm" variant="outline">Edit Profile</Button>
+        </div>
+
         <Tabs defaultValue="saved" className="w-full">
-          <TabsList className="w-full grid grid-cols-4">
-            <TabsTrigger value="saved" className="text-xs flex items-center">
+          <TabsList className="grid grid-cols-3 mb-8">
+            <TabsTrigger value="saved" className="text-xs">
               <Heart size={14} className="mr-1" />
               Saved
             </TabsTrigger>
-            <TabsTrigger value="history" className="text-xs flex items-center">
+            <TabsTrigger value="history" className="text-xs">
               <Clock size={14} className="mr-1" />
               History
             </TabsTrigger>
-            <TabsTrigger value="chefs" className="text-xs flex items-center">
-              <Chef size={14} className="mr-1" />
-              Chefs
-            </TabsTrigger>
-            <TabsTrigger value="plans" className="text-xs flex items-center">
-              <CalendarDays size={14} className="mr-1" />
-              Plans
+            <TabsTrigger value="account" className="text-xs">
+              <User size={14} className="mr-1" />
+              Account
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="saved" className="mt-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <TabsContent value="saved">
+            <div className="grid grid-cols-2 gap-4">
               {savedRecipes.map(recipe => (
-                <div key={recipe.id}>
-                  <RecipeCard {...recipe} />
-                </div>
+                <RecipeCard key={recipe.id} {...recipe} />
               ))}
             </div>
           </TabsContent>
           
-          <TabsContent value="history" className="mt-4">
-            <div className="text-center p-8">
-              <p className="text-sm text-gray-500">You haven't viewed any recipes recently</p>
-              <Button className="mt-4 bg-culinary-secondary text-white hover:bg-culinary-secondary/90">
-                Discover Recipes
-              </Button>
+          <TabsContent value="history">
+            <div className="flex flex-col space-y-2 p-4 text-center bg-gray-50 dark:bg-gray-800 rounded-md">
+              <p className="text-sm text-gray-500">Your browsing history will appear here</p>
+              <Button variant="outline" size="sm">Browse Recipes</Button>
             </div>
           </TabsContent>
           
-          <TabsContent value="chefs" className="mt-4">
-            <div className="text-center p-8">
-              <p className="text-sm text-gray-500">You haven't followed any chefs yet</p>
-              <Button className="mt-4 bg-culinary-secondary text-white hover:bg-culinary-secondary/90">
-                Find Chefs
-              </Button>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="plans" className="mt-4">
-            <div className="text-center p-8">
-              <p className="text-sm text-gray-500">You haven't created any meal plans yet</p>
-              <Button className="mt-4 bg-culinary-secondary text-white hover:bg-culinary-secondary/90">
-                Create Meal Plan
-              </Button>
+          <TabsContent value="account">
+            <div className="space-y-4">
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                <div className="flex items-center mb-3">
+                  <BookUser size={18} className="mr-3 text-culinary-primary" />
+                  <span className="text-sm font-medium">Personal Information</span>
+                </div>
+                <Button variant="ghost" size="sm" className="w-full justify-start text-xs">
+                  Manage your personal details
+                </Button>
+              </div>
+              
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                <div className="flex items-center mb-3">
+                  <CreditCard size={18} className="mr-3 text-culinary-primary" />
+                  <span className="text-sm font-medium">Payment Methods</span>
+                </div>
+                <Button variant="ghost" size="sm" className="w-full justify-start text-xs">
+                  Manage your payment options
+                </Button>
+              </div>
+              
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                <div className="flex items-center mb-3">
+                  <Utensils size={18} className="mr-3 text-culinary-primary" />
+                  <span className="text-sm font-medium">Dietary Preferences</span>
+                </div>
+                <Button variant="ghost" size="sm" className="w-full justify-start text-xs">
+                  Update your food preferences
+                </Button>
+              </div>
             </div>
           </TabsContent>
         </Tabs>
