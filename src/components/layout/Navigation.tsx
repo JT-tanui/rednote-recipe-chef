@@ -1,12 +1,9 @@
-
 import { Link, useLocation } from 'react-router-dom';
 import { Home, CalendarDays, Utensils, MapPin, User, Inbox } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const Navigation = () => {
   const location = useLocation();
-  const isMobile = useIsMobile();
   
   const navItems = [
     { path: '/', label: 'Discover', icon: Home },
@@ -16,7 +13,6 @@ const Navigation = () => {
     { path: '/profile', label: 'Profile', icon: User },
   ];
 
-  // Mobile navigation
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg z-50 md:hidden">
       <div className="flex justify-around items-center h-16 max-w-md mx-auto">
