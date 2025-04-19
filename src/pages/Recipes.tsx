@@ -5,6 +5,8 @@ import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Link } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Mock recipe data
 const mockRecipes = [
@@ -69,9 +71,11 @@ const cuisineFilters = [
 ];
 
 const Recipes = () => {
+  const isMobile = useIsMobile();
+  
   return (
     <MainLayout>
-      <div className="p-4 md:p-6 max-w-4xl mx-auto">
+      <div className={`p-4 md:p-6 ${!isMobile ? "max-w-5xl mx-auto" : ""}`}>
         <header className="mb-6">
           <h1 className="text-xl font-bold">Recipe Collection</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">Discover and save your favorite recipes</p>
@@ -107,7 +111,9 @@ const Recipes = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {mockRecipes.map(recipe => (
             <div key={recipe.id}>
-              <RecipeCard {...recipe} />
+              <Link to={`/recipes/${recipe.id}`}>
+                <RecipeCard {...recipe} />
+              </Link>
             </div>
           ))}
         </div>
