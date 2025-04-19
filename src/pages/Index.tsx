@@ -1,12 +1,12 @@
+
 import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
-import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
-import RestaurantCard from '@/components/ui/restaurant-card/RestaurantCard';
-import ChefCard from '@/components/ui/chef-card/ChefCard';
-import DiscoveryFeed from '@/components/feed/DiscoveryFeed';
 import DiscoveryCategorySelector from '@/components/feed/DiscoveryCategorySelector';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import TrendingSection from '@/components/discover/TrendingSection';
+import ForYouSection from '@/components/discover/ForYouSection';
+import NearbySection from '@/components/discover/NearbySection';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 type CategoryType = 'all' | 'recipes' | 'restaurants' | 'chefs';
 type FeedType = 'for-you' | 'trending' | 'nearby';
@@ -248,28 +248,21 @@ const Index = () => {
     return null;
   };
 
-  const getCurrentFeedItems = () => {
-    switch (activeTab) {
-      case 'trending':
-        return trendingItems;
-      case 'nearby':
-        return nearbyItems;
-      case 'for-you':
-      default:
-        return forYouItems;
-    }
+  const getFilteredItems = (items: typeof forYouItems) => {
+    const filterType = getFilterType();
+    return filterType ? items.filter(item => item.type === filterType) : items;
   };
 
   return (
     <MainLayout>
-      <div className="min-h-screen">
-        <header className="bg-white dark:bg-gray-800 shadow-sm p-4 flex items-center justify-between">
-          {isMobile && <h1 className="text-lg font-bold text-gradient">DineX</h1>}
-          <Tabs defaultValue={activeTab} onValueChange={(value) => setActiveTab(value as FeedType)} className="w-auto">
-            <TabsList className="bg-gray-100 dark:bg-gray-700">
-              <TabsTrigger value="for-you" className="text-xs">For You</TabsTrigger>
-              <TabsTrigger value="trending" className="text-xs">Trending</TabsTrigger>
-              <TabsTrigger value="nearby" className="text-xs">Nearby</TabsTrigger>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <header className="bg-white dark:bg-gray-800 shadow-sm p-4 sticky top-0 z-10">
+          {isMobile && <h1 className="text-lg font-bold text-gradient mb-4">DineX</h1>}
+          <Tabs defaultValue={activeTab} onValueChange={(value) => setActiveTab(value as FeedType)} className="w-full">
+            <TabsList className="w-full justify-center bg-gray-100 dark:bg-gray-700 p-1 rounded-full">
+              <TabsTrigger value="for-you" className="rounded-full">For You</TabsTrigger>
+              <TabsTrigger value="trending" className="rounded-full">Trending</TabsTrigger>
+              <TabsTrigger value="nearby" className="rounded-full">Nearby</TabsTrigger>
             </TabsList>
           </Tabs>
         </header>
@@ -279,9 +272,19 @@ const Index = () => {
           onSelectCategory={handleCategoryChange}
         />
         
-        <section>
-          <DiscoveryFeed items={getCurrentFeedItems()} filterType={getFilterType()} />
-        </section>
+        <main>
+          <TabsContent value="for-you" className="m-0">
+            <ForYouSection items={getFilteredItems(forYouItems)} />
+          </TabsContent>
+          
+          <TabsContent value="trending" className="m-0">
+            <TrendingSection trendingItems={getFilteredItems(trendingItems)} />
+          </TabsContent>
+          
+          <TabsContent value="nearby" className="m-0">
+            <NearbySection items={getFilteredItems(nearbyItems)} />
+          </TabsContent>
+        </main>
       </div>
     </MainLayout>
   );
