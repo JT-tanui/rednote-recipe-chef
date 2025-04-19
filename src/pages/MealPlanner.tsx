@@ -1,8 +1,8 @@
-
 import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CalendarDays, Utensils, MapPin, ChefHat } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 import MealWeekView from './meal-planner/MealWeekView';
 import ReservationsView from './meal-planner/ReservationsView';
@@ -10,6 +10,7 @@ import ServicesView from './meal-planner/ServicesView';
 import CalendarView from './meal-planner/CalendarView';
 
 const MealPlanner = () => {
+  const isMobile = useIsMobile();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [activeWeek, setActiveWeek] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState('week-view');
@@ -17,11 +18,13 @@ const MealPlanner = () => {
   return (
     <MainLayout>
       <div className="p-4 md:p-6 max-w-4xl mx-auto pb-20">
-        <header className="mb-6">
-          <h1 className="text-xl font-bold">Planner</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Organize your meals, reservations, and services</p>
-        </header>
-
+        {isMobile && (
+          <header className="mb-6">
+            <h1 className="text-xl font-bold">Planner</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Organize your meals, reservations, and services</p>
+          </header>
+        )}
+        
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="w-full grid grid-cols-4">
             <TabsTrigger value="week-view" className="flex-1 text-xs">

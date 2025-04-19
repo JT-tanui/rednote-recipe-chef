@@ -1,5 +1,5 @@
-
 import MainLayout from '@/components/layout/MainLayout';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Bell, MessageSquare, Calendar, ChefHat, 
@@ -105,13 +105,17 @@ const activities = [
 ];
 
 const Inbox = () => {
+  const isMobile = useIsMobile();
+  
   return (
     <MainLayout>
       <div className="container max-w-md mx-auto px-4 pt-5 pb-20">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-lg font-bold">Inbox</h1>
-        </div>
-
+        {isMobile && (
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-lg font-bold">Inbox</h1>
+          </div>
+        )}
+        
         <Tabs defaultValue="notifications" className="w-full">
           <TabsList className="grid grid-cols-3 mb-6">
             <TabsTrigger value="notifications" className="text-xs relative">

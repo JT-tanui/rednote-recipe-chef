@@ -1,4 +1,3 @@
-
 import MainLayout from '@/components/layout/MainLayout';
 import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
 import { Search, Filter } from 'lucide-react';
@@ -76,10 +75,12 @@ const Recipes = () => {
   return (
     <MainLayout>
       <div className={`p-4 md:p-6 ${!isMobile ? "max-w-5xl mx-auto" : ""}`}>
-        <header className="mb-6">
-          <h1 className="text-xl font-bold">Recipe Collection</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Discover and save your favorite recipes</p>
-        </header>
+        {isMobile && (
+          <header className="mb-6">
+            <h1 className="text-xl font-bold">Recipe Collection</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Discover and save your favorite recipes</p>
+          </header>
+        )}
         
         <div className="flex space-x-2 mb-6">
           <div className="relative flex-1">

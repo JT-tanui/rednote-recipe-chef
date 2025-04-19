@@ -1,13 +1,14 @@
-
 import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Utensils, User, Settings, BookUser, CreditCard, Heart, Clock } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
 
 const Profile = () => {
+  const isMobile = useIsMobile();
   const [user] = useState({
     name: 'Jane Smith',
     email: 'jane.smith@example.com',
@@ -40,13 +41,15 @@ const Profile = () => {
   return (
     <MainLayout>
       <div className="container max-w-md mx-auto px-4 pt-5 pb-20">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-bold">Profile</h1>
-          <Button variant="ghost" size="icon">
-            <Settings size={20} />
-          </Button>
-        </div>
-
+        {isMobile && (
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-xl font-bold">Profile</h1>
+            <Button variant="ghost" size="icon">
+              <Settings size={20} />
+            </Button>
+          </div>
+        )}
+        
         <div className="flex flex-col items-center mb-6">
           <Avatar className="w-20 h-20 mb-3">
             <AvatarImage src={user.avatar} alt={user.name} />

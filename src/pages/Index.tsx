@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
@@ -7,6 +6,7 @@ import ChefCard from '@/components/ui/chef-card/ChefCard';
 import DiscoveryFeed from '@/components/feed/DiscoveryFeed';
 import DiscoveryCategorySelector from '@/components/feed/DiscoveryCategorySelector';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 type CategoryType = 'all' | 'recipes' | 'restaurants' | 'chefs';
 type FeedType = 'for-you' | 'trending' | 'nearby';
@@ -232,6 +232,7 @@ const nearbyItems = [
 ];
 
 const Index = () => {
+  const isMobile = useIsMobile();
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>('all');
   const [activeTab, setActiveTab] = useState<FeedType>('for-you');
 
@@ -263,7 +264,7 @@ const Index = () => {
     <MainLayout>
       <div className="min-h-screen">
         <header className="bg-white dark:bg-gray-800 shadow-sm p-4 flex items-center justify-between">
-          <h1 className="text-lg font-bold text-gradient">DineX</h1>
+          {isMobile && <h1 className="text-lg font-bold text-gradient">DineX</h1>}
           <Tabs defaultValue={activeTab} onValueChange={(value) => setActiveTab(value as FeedType)} className="w-auto">
             <TabsList className="bg-gray-100 dark:bg-gray-700">
               <TabsTrigger value="for-you" className="text-xs">For You</TabsTrigger>
