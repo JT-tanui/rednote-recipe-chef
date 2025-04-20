@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import DiscoveryCategorySelector from '@/components/feed/DiscoveryCategorySelector';
@@ -13,9 +12,11 @@ import PopularDestinations from '@/components/home/PopularDestinations';
 import CulinaryExperiences from '@/components/home/CulinaryExperiences';
 import TopRated from '@/components/home/TopRated';
 import Newsletter from '@/components/home/Newsletter';
-import { RestaurantCard } from '@/components/ui/restaurant-card/RestaurantCard';
-import { RecipeCard } from '@/components/ui/recipe-card/RecipeCard';
-import { ChefCard } from '@/components/ui/chef-card/ChefCard';
+import RestaurantCard from '@/components/ui/restaurant-card/RestaurantCard';
+import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
+import ChefCard from '@/components/ui/chef-card/ChefCard';
+import FeaturedRestaurants from '@/components/home/FeaturedRestaurants';
+import SeasonalSpecials from '@/components/home/SeasonalSpecials';
 
 type CategoryType = 'all' | 'recipes' | 'restaurants' | 'chefs';
 type FeedType = 'for-you' | 'trending' | 'nearby';
@@ -305,6 +306,8 @@ const Index = () => {
         </div>
 
         <div className="space-y-12">
+          <FeaturedRestaurants />
+          <SeasonalSpecials />
           <BrowseCategories />
           <TopRated />
           <PopularDestinations />
