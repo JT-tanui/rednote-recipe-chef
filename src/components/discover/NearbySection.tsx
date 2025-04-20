@@ -1,5 +1,5 @@
 
-import { motion } from "framer-motion";
+import React from 'react';
 
 interface NearbySectionProps {
   items: Array<{
@@ -10,23 +10,28 @@ interface NearbySectionProps {
 }
 
 const NearbySection = ({ items }: NearbySectionProps) => {
+  if (items.length === 0) {
+    return (
+      <div className="h-[calc(100vh-200px)] flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="text-center p-4">
+          <h3 className="text-lg font-semibold mb-2">No nearby content found</h3>
+          <p className="text-sm text-gray-500">Try enabling location services</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <section className="py-8 bg-gradient-to-b from-gray-50/50 to-white dark:from-gray-900/50 dark:to-gray-900">
+    <section className="py-8">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
-          Near You 📍
+          Near You
         </h2>
-        <div className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory">
-          {items.map((item, index) => (
-            <motion.div
-              key={item.id}
-              className="flex-none w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-center"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {items.map((item) => (
+            <div key={item.id} className="transform transition-all hover:scale-105">
               {item.content}
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

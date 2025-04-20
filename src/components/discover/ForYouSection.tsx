@@ -1,6 +1,5 @@
 
-import { motion } from "framer-motion";
-import { Card } from "../ui/card";
+import React from 'react';
 
 interface ForYouSectionProps {
   items: Array<{
@@ -11,24 +10,28 @@ interface ForYouSectionProps {
 }
 
 const ForYouSection = ({ items }: ForYouSectionProps) => {
+  if (items.length === 0) {
+    return (
+      <div className="h-[calc(100vh-200px)] flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="text-center p-4">
+          <h3 className="text-lg font-semibold mb-2">No content found</h3>
+          <p className="text-sm text-gray-500">Try a different category or check back later</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <section className="py-8 bg-gradient-to-r from-culinary-primary/5 to-transparent">
+    <section className="py-8">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
-          Curated For You ✨
+          For You
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                {item.content}
-              </Card>
-            </motion.div>
+          {items.map((item) => (
+            <div key={item.id} className="transform transition-all hover:scale-105">
+              {item.content}
+            </div>
           ))}
         </div>
       </div>

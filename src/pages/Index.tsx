@@ -266,27 +266,25 @@ const Index = () => {
               <TabsTrigger value="trending" className="rounded-full">Trending</TabsTrigger>
               <TabsTrigger value="nearby" className="rounded-full">Nearby</TabsTrigger>
             </TabsList>
+            
+            <DiscoveryCategorySelector
+              selectedCategory={selectedCategory}
+              onSelectCategory={handleCategoryChange}
+            />
+            
+            <TabsContent value="for-you" className="m-0">
+              <ForYouSection items={getFilteredItems(forYouItems)} />
+            </TabsContent>
+            
+            <TabsContent value="trending" className="m-0">
+              <TrendingSection trendingItems={getFilteredItems(trendingItems)} />
+            </TabsContent>
+            
+            <TabsContent value="nearby" className="m-0">
+              <NearbySection items={getFilteredItems(nearbyItems)} />
+            </TabsContent>
           </Tabs>
         </header>
-        
-        <DiscoveryCategorySelector
-          selectedCategory={selectedCategory}
-          onSelectCategory={handleCategoryChange}
-        />
-        
-        <main>
-          <TabsContent value="for-you" className="m-0">
-            <ForYouSection items={getFilteredItems(forYouItems)} />
-          </TabsContent>
-          
-          <TabsContent value="trending" className="m-0">
-            <TrendingSection trendingItems={getFilteredItems(trendingItems)} />
-          </TabsContent>
-          
-          <TabsContent value="nearby" className="m-0">
-            <NearbySection items={getFilteredItems(nearbyItems)} />
-          </TabsContent>
-        </main>
       </div>
     </MainLayout>
   );
