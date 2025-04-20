@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import DiscoveryCategorySelector from '@/components/feed/DiscoveryCategorySelector';
@@ -7,6 +6,9 @@ import ForYouSection from '@/components/discover/ForYouSection';
 import NearbySection from '@/components/discover/NearbySection';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import HeroSection from '@/components/home/HeroSection';
+import BrowseCategories from '@/components/home/BrowseCategories';
+import InspirationSection from '@/components/home/InspirationSection';
 import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
 import RestaurantCard from '@/components/ui/restaurant-card/RestaurantCard';
 import ChefCard from '@/components/ui/chef-card/ChefCard';
@@ -262,41 +264,8 @@ const Index = () => {
   return (
     <MainLayout>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        {/* Hero Section with Search - Booking.com Style */}
-        <div className="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
-          <div className="max-w-7xl mx-auto px-4 py-8 md:py-16">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl md:text-5xl font-bold mb-4">Find your next culinary experience</h1>
-              <p className="text-lg md:text-xl opacity-90">Discover restaurants, recipes, and personal chefs near you</p>
-            </div>
-
-            {/* Search Bar */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg max-w-3xl mx-auto">
-              <div className="flex items-center">
-                <div className="flex-1 relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    className="border-0 pl-10 py-3 w-full rounded-l-md bg-transparent focus:ring-0 text-gray-900 dark:text-white"
-                    placeholder="Search for restaurants, recipes, or chefs..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-                <div className="flex items-center px-4 border-l border-gray-300 dark:border-gray-600">
-                  <MapPin className="h-5 w-5 text-primary mr-2" />
-                  <span className="text-gray-700 dark:text-gray-300">Near me</span>
-                </div>
-                <Button className="ml-2 bg-primary hover:bg-primary/90">
-                  Search
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <HeroSection searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+        
         <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 shadow-sm">
           <div className="max-w-7xl mx-auto px-4">
             <Tabs 
@@ -334,49 +303,8 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Content sections that appear on all tabs - Booking.com style browsing categories */}
-        <section className="py-8 bg-white dark:bg-gray-900">
-          <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-6">Browse by Category</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {['Restaurants', 'Recipes', 'Personal Chefs', 'Catering'].map((category, index) => (
-                <div key={index} className="bg-gray-100 dark:bg-gray-800 rounded-xl p-4 text-center hover:shadow-md transition-all cursor-pointer">
-                  <div className="h-24 flex items-center justify-center">
-                    {/* Placeholder for category icon */}
-                    <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
-                      <span className="text-2xl">{category.charAt(0)}</span>
-                    </div>
-                  </div>
-                  <p className="font-medium mt-2">{category}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Additional sections that would appear on all tabs */}
-        <section className="py-8 bg-gray-50 dark:bg-gray-800/50">
-          <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-6">Get Inspired</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { title: "Weekend Getaway Meals", desc: "Quick recipes for your trip" },
-                { title: "Fine Dining Experiences", desc: "Top-rated restaurants" },
-                { title: "Private Chef Experience", desc: "Luxury dining at home" }
-              ].map((item, index) => (
-                <div key={index} className="relative h-48 overflow-hidden rounded-lg group cursor-pointer">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                  {/* Placeholder gradient background instead of image */}
-                  <div className={`absolute inset-0 bg-gradient-to-br from-blue-${(index + 3) * 100} to-purple-${(index + 4) * 100}`}></div>
-                  <div className="absolute bottom-0 left-0 p-4 text-white z-20">
-                    <h3 className="text-lg font-bold">{item.title}</h3>
-                    <p className="text-sm opacity-90">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <BrowseCategories />
+        <InspirationSection />
       </div>
     </MainLayout>
   );
