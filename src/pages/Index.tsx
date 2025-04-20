@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import DiscoveryCategorySelector from '@/components/feed/DiscoveryCategorySelector';
@@ -7,6 +6,9 @@ import ForYouSection from '@/components/discover/ForYouSection';
 import NearbySection from '@/components/discover/NearbySection';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
+import RestaurantCard from '@/components/ui/restaurant-card/RestaurantCard';
+import ChefCard from '@/components/ui/chef-card/ChefCard';
 
 type CategoryType = 'all' | 'recipes' | 'restaurants' | 'chefs';
 type FeedType = 'for-you' | 'trending' | 'nearby';
