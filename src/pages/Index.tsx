@@ -13,6 +13,9 @@ import PopularDestinations from '@/components/home/PopularDestinations';
 import CulinaryExperiences from '@/components/home/CulinaryExperiences';
 import TopRated from '@/components/home/TopRated';
 import Newsletter from '@/components/home/Newsletter';
+import { RestaurantCard } from '@/components/ui/restaurant-card/RestaurantCard';
+import { RecipeCard } from '@/components/ui/recipe-card/RecipeCard';
+import { ChefCard } from '@/components/ui/chef-card/ChefCard';
 
 type CategoryType = 'all' | 'recipes' | 'restaurants' | 'chefs';
 type FeedType = 'for-you' | 'trending' | 'nearby';
@@ -301,12 +304,14 @@ const Index = () => {
           </div>
         </div>
 
-        <BrowseCategories />
-        <TopRated />
-        <PopularDestinations />
-        <InspirationSection />
-        <CulinaryExperiences />
-        <Newsletter />
+        <div className="space-y-12">
+          <BrowseCategories />
+          <TopRated />
+          <PopularDestinations />
+          <InspirationSection />
+          <CulinaryExperiences />
+          <Newsletter />
+        </div>
       </div>
     </MainLayout>
   );

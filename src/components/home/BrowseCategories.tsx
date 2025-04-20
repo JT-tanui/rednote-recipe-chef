@@ -1,6 +1,5 @@
-
-import { Chef, UtensilsCrossed, Building2, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Utensils, Building2, Users, ShoppingBag } from 'lucide-react';
 
 const BrowseCategories = () => {
   const categories = [
@@ -13,14 +12,14 @@ const BrowseCategories = () => {
     },
     { 
       name: 'Recipes',
-      icon: <UtensilsCrossed className="h-6 w-6" />,
+      icon: <Utensils className="h-6 w-6" />,
       description: 'Discover delicious recipes for any occasion',
       link: '/recipes',
       color: 'bg-green-500'
     },
     { 
       name: 'Personal Chefs',
-      icon: <Chef className="h-6 w-6" />,
+      icon: <Users className="h-6 w-6" />,
       description: 'Hire professional chefs for private dining experiences',
       link: '/chefs',
       color: 'bg-purple-500'
