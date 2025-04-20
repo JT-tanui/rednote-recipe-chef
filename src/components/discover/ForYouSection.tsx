@@ -1,5 +1,8 @@
 
 import React from 'react';
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react";
 
 interface ForYouSectionProps {
   items: Array<{
@@ -22,16 +25,24 @@ const ForYouSection = ({ items }: ForYouSectionProps) => {
   }
 
   return (
-    <section className="py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
-          For You
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section className="py-6">
+      <div className="max-w-7xl mx-auto px-4 space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            Recommended for You
+          </h2>
+          <Button variant="ghost" className="flex items-center text-blue-600 hover:text-blue-800">
+            See all <ChevronRight size={16} />
+          </Button>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {items.map((item) => (
-            <div key={item.id} className="transform transition-all hover:scale-105">
-              {item.content}
-            </div>
+            <Card key={item.id} className="overflow-hidden border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all h-full">
+              <CardContent className="p-0">
+                {item.content}
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
