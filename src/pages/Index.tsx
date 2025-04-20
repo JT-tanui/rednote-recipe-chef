@@ -1,19 +1,18 @@
+
 import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import DiscoveryCategorySelector from '@/components/feed/DiscoveryCategorySelector';
 import TrendingSection from '@/components/discover/TrendingSection';
 import ForYouSection from '@/components/discover/ForYouSection';
 import NearbySection from '@/components/discover/NearbySection';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import HeroSection from '@/components/home/HeroSection';
 import BrowseCategories from '@/components/home/BrowseCategories';
 import InspirationSection from '@/components/home/InspirationSection';
-import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
-import RestaurantCard from '@/components/ui/restaurant-card/RestaurantCard';
-import ChefCard from '@/components/ui/chef-card/ChefCard';
-import { Search, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import PopularDestinations from '@/components/home/PopularDestinations';
+import CulinaryExperiences from '@/components/home/CulinaryExperiences';
+import TopRated from '@/components/home/TopRated';
+import Newsletter from '@/components/home/Newsletter';
 
 type CategoryType = 'all' | 'recipes' | 'restaurants' | 'chefs';
 type FeedType = 'for-you' | 'trending' | 'nearby';
@@ -239,7 +238,6 @@ const nearbyItems = [
 ];
 
 const Index = () => {
-  const isMobile = useIsMobile();
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>('all');
   const [activeTab, setActiveTab] = useState<FeedType>('for-you');
   const [searchQuery, setSearchQuery] = useState('');
@@ -304,7 +302,11 @@ const Index = () => {
         </div>
 
         <BrowseCategories />
+        <TopRated />
+        <PopularDestinations />
         <InspirationSection />
+        <CulinaryExperiences />
+        <Newsletter />
       </div>
     </MainLayout>
   );
