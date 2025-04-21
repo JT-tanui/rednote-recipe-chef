@@ -268,6 +268,7 @@ const Index = () => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <HeroSection searchQuery={searchQuery} onSearchChange={setSearchQuery} />
         
+        {/* Discovery Feed Section */}
         <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 shadow-sm">
           <div className="max-w-7xl mx-auto px-4">
             <Tabs 
@@ -305,7 +306,8 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="space-y-12">
+        {/* Main Content Sections with increased spacing and clear separation */}
+        <div className="mt-8 space-y-16 pb-16">
           <FeaturedRestaurants />
           <SeasonalSpecials />
           <BrowseCategories />
