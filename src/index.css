@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -110,6 +111,8 @@
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 ::-webkit-scrollbar-track {
@@ -120,10 +123,21 @@
   background: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease;
 }
 
 *:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
+
+/* Hide scrollbar when not scrolling */
+::-webkit-scrollbar-thumb {
+  opacity: 0;
+}
+
+*:hover::-webkit-scrollbar-thumb,
+*:active::-webkit-scrollbar-thumb,
+*:focus::-webkit-scrollbar-thumb {
   opacity: 1;
 }
 
@@ -132,4 +146,53 @@
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
   }
+}
+
+/* Animation utilities */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-lg;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Add some fun microinteractions */
+.pulse-on-hover:hover {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }

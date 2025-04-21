@@ -19,6 +19,7 @@ import BookingPage from "./pages/BookingPage";
 import BookingSummary from "./pages/BookingSummary";
 import PaymentCheckout from "./pages/PaymentCheckout";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import Seasonal from "./pages/Seasonal";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/chefs/:id" element={<ChefDetails />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/seasonal" element={<Seasonal />} />
           
           {/* Booking Flow Routes */}
           <Route path="/booking" element={<BookingPage />} />

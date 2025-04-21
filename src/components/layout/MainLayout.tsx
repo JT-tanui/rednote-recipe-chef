@@ -6,6 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import Footer from './Footer';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -40,7 +41,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       )}
       
       <main className="flex-1 pb-16 md:pb-0">{children}</main>
+      
       {isMobile && <Navigation />}
+      
+      <Footer />
     </div>
   );
 };

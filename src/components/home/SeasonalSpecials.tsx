@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Link } from "react-router-dom";
 
 const SeasonalSpecials = () => {
   const seasonalItems = [
@@ -13,7 +14,8 @@ const SeasonalSpecials = () => {
       period: "March - May",
       description: "Fresh, locally-sourced spring vegetables and herbs",
       highlights: ["Asparagus Risotto", "Garden Pea Soup", "Edible Flowers"],
-      rating: 4.9
+      rating: 4.9,
+      path: "/restaurants/spring-garden"
     },
     {
       id: 2,
@@ -22,7 +24,8 @@ const SeasonalSpecials = () => {
       period: "April",
       description: "Japanese-inspired dishes celebrating sakura season",
       highlights: ["Sakura Mochi", "Cherry Blossom Tea", "Spring Bento"],
-      rating: 4.8
+      rating: 4.8,
+      path: "/restaurants/cherry-blossom"
     },
     {
       id: 3,
@@ -31,7 +34,8 @@ const SeasonalSpecials = () => {
       period: "September - November",
       description: "Exclusive dishes featuring seasonal wild mushrooms",
       highlights: ["Truffle Pasta", "Wild Mushroom Soup", "Forest Risotto"],
-      rating: 4.7
+      rating: 4.7,
+      path: "/restaurants/wild-mushroom"
     },
     {
       id: 4,
@@ -40,7 +44,8 @@ const SeasonalSpecials = () => {
       period: "June - August",
       description: "Delightful berry-based desserts and refreshing drinks",
       highlights: ["Mixed Berry Tart", "Strawberry Gazpacho", "Blueberry Sorbet"],
-      rating: 4.9
+      rating: 4.9,
+      path: "/restaurants/summer-berry"
     }
   ];
 
@@ -54,9 +59,11 @@ const SeasonalSpecials = () => {
               Experience unique flavors that celebrate the best of each season
             </p>
           </div>
-          <Button variant="outline" className="hidden md:flex">
-            View All Seasonal Menus
-          </Button>
+          <Link to="/seasonal">
+            <Button variant="outline" className="hidden md:flex">
+              View All Seasonal Menus
+            </Button>
+          </Link>
         </div>
 
         <Carousel
@@ -69,7 +76,7 @@ const SeasonalSpecials = () => {
           <CarouselContent className="-ml-2 md:-ml-4">
             {seasonalItems.map((item) => (
               <CarouselItem key={item.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-all h-full">
+                <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-all h-full cursor-pointer transform hover:scale-[1.02] transition-transform duration-300">
                   <div className="relative h-48">
                     <img
                       src={item.image}
@@ -90,7 +97,7 @@ const SeasonalSpecials = () => {
                     <p className="text-gray-600 dark:text-gray-400 mb-4">
                       {item.description}
                     </p>
-                    <div className="space-y-2">
+                    <div className="space-y-2 mb-4">
                       {item.highlights.map((highlight, index) => (
                         <div
                           key={index}
@@ -100,6 +107,11 @@ const SeasonalSpecials = () => {
                         </div>
                       ))}
                     </div>
+                    <Link to={item.path}>
+                      <Button className="w-full bg-culinary-primary text-white hover:bg-culinary-primary/90">
+                        View Details
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               </CarouselItem>
@@ -112,9 +124,11 @@ const SeasonalSpecials = () => {
         </Carousel>
         
         <div className="mt-6 flex justify-center md:hidden">
-          <Button variant="outline">
-            View All Seasonal Menus
-          </Button>
+          <Link to="/seasonal">
+            <Button variant="outline">
+              View All Seasonal Menus
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

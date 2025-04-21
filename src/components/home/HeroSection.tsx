@@ -3,6 +3,7 @@ import { Search, MapPin, Calendar, Users } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Link, useNavigate } from "react-router-dom";
 
 interface HeroSectionProps {
   searchQuery: string;
@@ -11,12 +12,30 @@ interface HeroSectionProps {
 
 const HeroSection = ({ searchQuery, onSearchChange }: HeroSectionProps) => {
   const [activeTab, setActiveTab] = useState<string>("restaurants");
+  const navigate = useNavigate();
+  
+  const handleSearch = () => {
+    // Navigate to appropriate page based on active tab
+    if (searchQuery.trim()) {
+      switch(activeTab) {
+        case 'restaurants':
+          navigate(`/restaurants?search=${encodeURIComponent(searchQuery)}`);
+          break;
+        case 'recipes':
+          navigate(`/recipes?search=${encodeURIComponent(searchQuery)}`);
+          break;
+        case 'chefs':
+          navigate(`/chefs?search=${encodeURIComponent(searchQuery)}`);
+          break;
+      }
+    }
+  };
   
   return (
-    <div className="bg-gradient-to-r from-primary/90 to-primary text-white">
+    <div className="bg-gradient-to-r from-culinary-primary/90 to-culinary-primary text-white">
       <div className="max-w-7xl mx-auto px-4 py-10 md:py-20">
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Discover Your Perfect Culinary Experience</h1>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4 animate-fade-in">Discover Your Perfect Culinary Experience</h1>
           <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto">
             Find and book amazing restaurants, discover recipes, or hire personal chefs in your area
           </p>
@@ -39,25 +58,31 @@ const HeroSection = ({ searchQuery, onSearchChange }: HeroSectionProps) => {
                   </div>
                   <input
                     type="text"
-                    className="border border-gray-200 pl-10 py-3 w-full rounded-md bg-transparent focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 dark:text-white"
+                    className="border border-gray-200 pl-10 py-3 w-full rounded-md bg-transparent focus:outline-none focus:ring-2 focus:ring-culinary-primary text-gray-900 dark:text-white"
                     placeholder="Search restaurants by name or cuisine..."
                     value={searchQuery}
                     onChange={(e) => onSearchChange(e.target.value)}
                   />
                 </div>
-                <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md">
-                  <MapPin className="h-5 w-5 text-primary mr-2" />
-                  <span className="text-gray-700 dark:text-gray-300">Near me</span>
-                </div>
-                <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md">
-                  <Calendar className="h-5 w-5 text-primary mr-2" />
-                  <span className="text-gray-700 dark:text-gray-300">Tonight</span>
-                </div>
-                <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md">
-                  <Users className="h-5 w-5 text-primary mr-2" />
-                  <span className="text-gray-700 dark:text-gray-300">2 guests</span>
-                </div>
-                <Button className="bg-primary hover:bg-primary/90 px-6">
+                <Link to="/restaurants?filter=nearby">
+                  <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md cursor-pointer hover:border-culinary-primary transition-colors">
+                    <MapPin className="h-5 w-5 text-culinary-primary mr-2" />
+                    <span className="text-gray-700 dark:text-gray-300">Near me</span>
+                  </div>
+                </Link>
+                <Link to="/booking">
+                  <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md cursor-pointer hover:border-culinary-primary transition-colors">
+                    <Calendar className="h-5 w-5 text-culinary-primary mr-2" />
+                    <span className="text-gray-700 dark:text-gray-300">Tonight</span>
+                  </div>
+                </Link>
+                <Link to="/booking?guests=2">
+                  <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md cursor-pointer hover:border-culinary-primary transition-colors">
+                    <Users className="h-5 w-5 text-culinary-primary mr-2" />
+                    <span className="text-gray-700 dark:text-gray-300">2 guests</span>
+                  </div>
+                </Link>
+                <Button className="bg-culinary-primary hover:bg-culinary-primary/90 px-6" onClick={handleSearch}>
                   Search
                 </Button>
               </div>
@@ -71,21 +96,25 @@ const HeroSection = ({ searchQuery, onSearchChange }: HeroSectionProps) => {
                   </div>
                   <input
                     type="text"
-                    className="border border-gray-200 pl-10 py-3 w-full rounded-md bg-transparent focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 dark:text-white"
+                    className="border border-gray-200 pl-10 py-3 w-full rounded-md bg-transparent focus:outline-none focus:ring-2 focus:ring-culinary-primary text-gray-900 dark:text-white"
                     placeholder="Search recipes, ingredients, or cuisines..."
                     value={searchQuery}
                     onChange={(e) => onSearchChange(e.target.value)}
                   />
                 </div>
-                <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md">
-                  <Calendar className="h-5 w-5 text-primary mr-2" />
-                  <span className="text-gray-700 dark:text-gray-300">Prep time</span>
-                </div>
-                <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md">
-                  <Users className="h-5 w-5 text-primary mr-2" />
-                  <span className="text-gray-700 dark:text-gray-300">Difficulty</span>
-                </div>
-                <Button className="bg-primary hover:bg-primary/90 px-6">
+                <Link to="/recipes?filter=time">
+                  <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md cursor-pointer hover:border-culinary-primary transition-colors">
+                    <Calendar className="h-5 w-5 text-culinary-primary mr-2" />
+                    <span className="text-gray-700 dark:text-gray-300">Prep time</span>
+                  </div>
+                </Link>
+                <Link to="/recipes?filter=difficulty">
+                  <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md cursor-pointer hover:border-culinary-primary transition-colors">
+                    <Users className="h-5 w-5 text-culinary-primary mr-2" />
+                    <span className="text-gray-700 dark:text-gray-300">Difficulty</span>
+                  </div>
+                </Link>
+                <Button className="bg-culinary-primary hover:bg-culinary-primary/90 px-6" onClick={handleSearch}>
                   Search
                 </Button>
               </div>
@@ -99,21 +128,25 @@ const HeroSection = ({ searchQuery, onSearchChange }: HeroSectionProps) => {
                   </div>
                   <input
                     type="text"
-                    className="border border-gray-200 pl-10 py-3 w-full rounded-md bg-transparent focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 dark:text-white"
+                    className="border border-gray-200 pl-10 py-3 w-full rounded-md bg-transparent focus:outline-none focus:ring-2 focus:ring-culinary-primary text-gray-900 dark:text-white"
                     placeholder="Search for personal chefs by cuisine or name..."
                     value={searchQuery}
                     onChange={(e) => onSearchChange(e.target.value)}
                   />
                 </div>
-                <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md">
-                  <MapPin className="h-5 w-5 text-primary mr-2" />
-                  <span className="text-gray-700 dark:text-gray-300">Near me</span>
-                </div>
-                <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md">
-                  <Calendar className="h-5 w-5 text-primary mr-2" />
-                  <span className="text-gray-700 dark:text-gray-300">Available date</span>
-                </div>
-                <Button className="bg-primary hover:bg-primary/90 px-6">
+                <Link to="/chefs?filter=nearby">
+                  <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md cursor-pointer hover:border-culinary-primary transition-colors">
+                    <MapPin className="h-5 w-5 text-culinary-primary mr-2" />
+                    <span className="text-gray-700 dark:text-gray-300">Near me</span>
+                  </div>
+                </Link>
+                <Link to="/booking?type=chef">
+                  <div className="flex items-center px-4 py-2 border border-gray-200 rounded-md cursor-pointer hover:border-culinary-primary transition-colors">
+                    <Calendar className="h-5 w-5 text-culinary-primary mr-2" />
+                    <span className="text-gray-700 dark:text-gray-300">Available date</span>
+                  </div>
+                </Link>
+                <Button className="bg-culinary-primary hover:bg-culinary-primary/90 px-6" onClick={handleSearch}>
                   Search
                 </Button>
               </div>
