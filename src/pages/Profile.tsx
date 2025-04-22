@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Utensils, User, Settings, BookUser, CreditCard, Heart, Clock } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const isMobile = useIsMobile();
@@ -38,27 +39,42 @@ const Profile = () => {
     }
   ];
 
+  const navigate = useNavigate();
+
   return (
     <MainLayout>
       <div className="container max-w-md mx-auto px-4 pt-5 pb-20">
         {isMobile && (
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-xl font-bold">Profile</h1>
-            <Button variant="ghost" size="icon">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => navigate('/settings')}
+            >
               <Settings size={20} />
             </Button>
           </div>
         )}
         
-        <div className="flex flex-col items-center mb-6">
-          <Avatar className="w-20 h-20 mb-3">
+        <div className="flex flex-col items-center mb-6 animate-fade-in">
+          <Avatar className="w-20 h-20 mb-3 hover-scale">
             <AvatarImage src={user.avatar} alt={user.name} />
             <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
           </Avatar>
           <h2 className="text-lg font-semibold">{user.name}</h2>
           <p className="text-sm text-gray-500">{user.email}</p>
           <p className="text-xs text-center text-gray-600 mt-2 max-w-xs">{user.bio}</p>
-          <Button className="mt-4" size="sm" variant="outline">Edit Profile</Button>
+          <div className="flex gap-2 mt-4">
+            <Button size="sm" variant="outline">Edit Profile</Button>
+            <Button 
+              size="sm" 
+              variant="outline"
+              onClick={() => navigate('/settings')}
+            >
+              Settings
+            </Button>
+          </div>
         </div>
 
         <Tabs defaultValue="saved" className="w-full">
