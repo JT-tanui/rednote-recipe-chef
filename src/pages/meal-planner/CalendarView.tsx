@@ -2,7 +2,17 @@
 import React, { useState } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent } from '@/components/ui/card';
-import { CalendarDays } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { CalendarDays, Plus, Edit2 } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useNavigate } from 'react-router-dom';
 
 interface CalendarViewProps {
   date: Date | undefined;
@@ -10,6 +20,13 @@ interface CalendarViewProps {
 }
 
 const CalendarView = ({ date, setDate }: CalendarViewProps) => {
+  const navigate = useNavigate();
+  const [editingMeal, setEditingMeal] = useState<string | null>(null);
+
+  const handleAddRecipe = () => {
+    navigate('/recipes');
+  };
+
   return (
     <div className="mt-4">
       <Card>
@@ -33,40 +50,48 @@ const CalendarView = ({ date, setDate }: CalendarViewProps) => {
               
               {date && (
                 <div className="space-y-3">
-                  <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-md">
-                    <div className="text-xs font-medium mb-2">Breakfast</div>
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm">Greek Yogurt Bowl</div>
-                      <button className="text-xxs bg-culinary-primary text-white px-2 py-1 rounded">
-                        Change
-                      </button>
-                    </div>
-                  </div>
+                  {['Breakfast', 'Lunch', 'Dinner'].map((mealType) => (
+                    <Dialog key={mealType}>
+                      <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-md">
+                        <div className="text-xs font-medium mb-2">{mealType}</div>
+                        <div className="flex items-center justify-between">
+                          <div className="text-sm">
+                            {editingMeal === mealType ? 'Select Recipe' : `Sample ${mealType}`}
+                          </div>
+                          <DialogTrigger asChild>
+                            <Button variant="ghost" size="sm" className="hover:bg-gray-200 dark:hover:bg-gray-700">
+                              {editingMeal === mealType ? <Plus size={16} /> : <Edit2 size={16} />}
+                            </Button>
+                          </DialogTrigger>
+                        </div>
+                      </div>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Add Recipe to {mealType}</DialogTitle>
+                          <DialogDescription>
+                            Choose a recipe from your collection or browse new recipes
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                          <Button onClick={handleAddRecipe} className="w-full">
+                            Browse Recipes
+                          </Button>
+                          <Button variant="outline" className="w-full">
+                            View Saved Recipes
+                          </Button>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  ))}
                   
-                  <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-md">
-                    <div className="text-xs font-medium mb-2">Lunch</div>
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm">Chicken Salad</div>
-                      <button className="text-xxs bg-culinary-primary text-white px-2 py-1 rounded">
-                        Change
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-md">
-                    <div className="text-xs font-medium mb-2">Dinner</div>
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm">Salmon & Veggies</div>
-                      <button className="text-xxs bg-culinary-primary text-white px-2 py-1 rounded">
-                        Change
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <button className="w-full btn-secondary mt-4 text-sm flex items-center justify-center">
-                    <CalendarDays size={16} className="mr-1" />
+                  <Button 
+                    variant="default" 
+                    className="w-full mt-4 flex items-center justify-center gap-2"
+                    onClick={() => navigate('/meal-planner')}
+                  >
+                    <CalendarDays size={16} />
                     Generate Full Week Plan
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>

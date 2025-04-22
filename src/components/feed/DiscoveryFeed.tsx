@@ -2,6 +2,7 @@
 import { useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 interface FeedItem {
   id: string;
@@ -15,6 +16,7 @@ interface DiscoveryFeedProps {
 }
 
 const DiscoveryFeed = ({ items, filterType = null }: DiscoveryFeedProps) => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const feedRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState(0);
@@ -47,6 +49,20 @@ const DiscoveryFeed = ({ items, filterType = null }: DiscoveryFeedProps) => {
     setTouchEnd(0);
   };
 
+  const handleItemClick = (item: FeedItem) => {
+    switch (item.type) {
+      case 'recipe':
+        navigate(`/recipes/${item.id}`);
+        break;
+      case 'restaurant':
+        navigate(`/restaurants/${item.id}`);
+        break;
+      case 'chef':
+        navigate(`/chefs/${item.id}`);
+        break;
+    }
+  };
+
   // Filter items based on type if filterType is provided
   const filteredItems = filterType 
     ? items.filter(item => item.type === filterType)
@@ -76,10 +92,11 @@ const DiscoveryFeed = ({ items, filterType = null }: DiscoveryFeedProps) => {
           <div 
             key={item.id}
             className={cn(
-              "absolute top-0 left-0 w-full h-full transition-transform duration-500",
+              "absolute top-0 left-0 w-full h-full transition-transform duration-500 cursor-pointer",
               index === currentIndex ? "translate-y-0" : 
               index < currentIndex ? "-translate-y-full" : "translate-y-full"
             )}
+            onClick={() => handleItemClick(item)}
           >
             {item.content}
           </div>

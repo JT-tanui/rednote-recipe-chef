@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
@@ -191,7 +190,7 @@ const RecipeDetailPage = () => {
   return (
     <MainLayout>
       <div className={`pb-24 md:pb-6 ${!isMobile ? "max-w-5xl mx-auto" : ""}`}>
-        {/* Hero section */}
+        {/* Hero section with interactive elements */}
         <div className="relative h-64 md:h-96">
           <img 
             src={recipe.image} 
@@ -202,19 +201,19 @@ const RecipeDetailPage = () => {
           
           <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
             <div className="flex justify-between items-center">
-              <h1 className="text-xl md:text-3xl font-bold">{recipe.title}</h1>
+              <h1 className="text-xl md:text-3xl font-bold animate-fade-in">{recipe.title}</h1>
               <div className="flex space-x-2">
                 <button 
                   onClick={handleLikeRecipe}
-                  className="bg-white/20 p-2 rounded-full backdrop-blur-sm transition-colors hover:bg-white/30"
+                  className="bg-white/20 p-2 rounded-full backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/30"
                 >
-                  <Heart className={isLiked ? "fill-culinary-primary text-culinary-primary" : "text-white"} size={20} />
+                  <Heart className={`transition-colors ${isLiked ? "fill-culinary-primary text-culinary-primary" : "text-white"}`} size={20} />
                 </button>
                 <button 
                   onClick={handleSaveRecipe}
-                  className="bg-white/20 p-2 rounded-full backdrop-blur-sm transition-colors hover:bg-white/30"
+                  className="bg-white/20 p-2 rounded-full backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/30"
                 >
-                  <Plus className={isSaved ? "fill-culinary-primary text-culinary-primary" : "text-white"} size={20} />
+                  <Plus className={`transition-colors ${isSaved ? "fill-culinary-primary text-culinary-primary" : "text-white"}`} size={20} />
                 </button>
               </div>
             </div>
@@ -235,15 +234,22 @@ const RecipeDetailPage = () => {
           </div>
         </div>
         
-        {/* Recipe content */}
+        {/* Recipe content with enhanced interactions */}
         <div className="px-4 py-6 md:px-0">
-          {/* Action buttons */}
+          {/* Action buttons with hover effects */}
           <div className="flex flex-wrap gap-3 mb-6">
-            <Button onClick={handleAddToMealPlan} className="flex items-center">
+            <Button 
+              onClick={handleAddToMealPlan} 
+              className="flex items-center hover:scale-105 transition-transform"
+            >
               <Calendar size={16} className="mr-2" />
               Add to Meal Plan
             </Button>
-            <Button onClick={toggleCookingMode} className="flex items-center" variant="secondary">
+            <Button 
+              onClick={toggleCookingMode} 
+              className="flex items-center hover:scale-105 transition-transform" 
+              variant="secondary"
+            >
               <PlayCircle size={16} className="mr-2" />
               Start Cooking Mode
             </Button>
@@ -255,6 +261,7 @@ const RecipeDetailPage = () => {
             <p className="text-sm text-muted-foreground">{recipe.description}</p>
           </div>
           
+          {/* Enhanced tabs with smooth transitions */}
           <Tabs defaultValue="ingredients" className="w-full">
             <TabsList className="w-full grid grid-cols-3">
               <TabsTrigger value="ingredients">Ingredients</TabsTrigger>
