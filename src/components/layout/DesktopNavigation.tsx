@@ -15,7 +15,7 @@ const DesktopNavigation = () => {
   const location = useLocation();
   
   const navItems = [
-    { path: '/discover', label: 'Discover', icon: Home },
+    { path: '/', label: 'Discover', icon: Home },
     { path: '/meal-planner', label: 'Planner', icon: CalendarDays },
     { path: '/recipes', label: 'Recipes', icon: Utensils },
     { path: '/inbox', label: 'Inbox', icon: Inbox },
