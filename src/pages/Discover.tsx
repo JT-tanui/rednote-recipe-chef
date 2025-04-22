@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import DiscoveryCategorySelector from '@/components/feed/DiscoveryCategorySelector';
-import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import RecipeCard from '@/components/ui/recipe-card/RecipeCard';
 
@@ -42,6 +41,10 @@ const Discover = () => {
     }
   ];
 
+  const handleRecipeClick = (recipeId: string) => {
+    navigate(`/recipes/${recipeId}`);
+  };
+
   return (
     <MainLayout>
       <div className="relative">
@@ -58,10 +61,9 @@ const Discover = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {discoverItems.map((item) => (
               <div key={item.id} className="animate-fade-in">
-                <RecipeCard
-                  {...item}
-                  onClick={() => navigate(`/recipes/${item.id}`)}
-                />
+                <div onClick={() => handleRecipeClick(item.id)}>
+                  <RecipeCard {...item} />
+                </div>
               </div>
             ))}
           </div>
