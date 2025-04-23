@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +21,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import Seasonal from "./pages/Seasonal";
 import Settings from "./pages/Settings";
 import Catering from "./pages/Catering";
+import RestaurantDetailPage from "./pages/RestaurantDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +37,11 @@ const App = () => (
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipes/:id" element={<RecipeDetailPage />} />
           <Route path="/restaurants" element={<Restaurants />} />
-          <Route path="/restaurants/:id" element={<RecipeDetailPage />} />
+          <Route path="/restaurants/spring-garden" element={<RestaurantDetailPage />} />
+          <Route path="/restaurants/summer-collection" element={<RestaurantDetailPage />} />
+          <Route path="/restaurants/autumn-collection" element={<RestaurantDetailPage />} />
+          <Route path="/restaurants/winter-collection" element={<RestaurantDetailPage />} />
+          <Route path="/restaurants/:id" element={<RestaurantDetailPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/chefs" element={<Chefs />} />
