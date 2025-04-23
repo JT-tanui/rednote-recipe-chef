@@ -1,11 +1,12 @@
-
 import { Star, ExternalLink } from 'lucide-react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const TopRated = () => {
+  const navigate = useNavigate();
+  
   const topRestaurants = [
     {
       id: "r1",
@@ -92,6 +93,10 @@ const TopRated = () => {
     }
   ];
 
+  const handleReserveTable = (restaurantId: string) => {
+    navigate(`/booking?type=restaurant&id=${restaurantId}`);
+  };
+
   return (
     <section className="py-12 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4">
@@ -114,13 +119,15 @@ const TopRated = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {topRestaurants.map((restaurant) => (
                 <Card key={restaurant.id} className="overflow-hidden hover:shadow-lg transition-all transform hover:scale-[1.02] transition-transform duration-300">
-                  <div className="relative h-48">
-                    <img 
-                      src={restaurant.image} 
-                      alt={restaurant.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                  <Link to={restaurant.path}>
+                    <div className="relative h-48">
+                      <img 
+                        src={restaurant.image} 
+                        alt={restaurant.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </Link>
                   <CardContent className="p-4">
                     <div className="flex justify-between items-center mb-2">
                       <h3 className="font-semibold">{restaurant.name}</h3>
@@ -134,15 +141,14 @@ const TopRated = () => {
                       <span className="mx-2">{restaurant.price}</span>•
                       <span className="ml-2">{restaurant.location}</span>
                     </div>
-                    <Link to={restaurant.path}>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="w-full border-culinary-primary text-culinary-primary hover:bg-culinary-primary/10 mt-2"
-                      >
-                        View Details <ExternalLink className="ml-1 h-3 w-3" />
-                      </Button>
-                    </Link>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full border-culinary-primary text-culinary-primary hover:bg-culinary-primary/10 mt-2"
+                      onClick={() => handleReserveTable(restaurant.id)}
+                    >
+                      Reserve Table <ExternalLink className="ml-1 h-3 w-3" />
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -153,36 +159,29 @@ const TopRated = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {topRecipes.map((recipe) => (
                 <Card key={recipe.id} className="overflow-hidden hover:shadow-lg transition-all transform hover:scale-[1.02] transition-transform duration-300">
-                  <div className="relative h-48">
-                    <img 
-                      src={recipe.image} 
-                      alt={recipe.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <CardContent className="p-4">
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="font-semibold">{recipe.title}</h3>
-                      <div className="flex items-center">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
-                        <span>{recipe.rating}</span>
+                  <Link to={recipe.path}>
+                    <div className="relative h-48">
+                      <img 
+                        src={recipe.image} 
+                        alt={recipe.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <CardContent className="p-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <h3 className="font-semibold">{recipe.title}</h3>
+                        <div className="flex items-center">
+                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
+                          <span>{recipe.rating}</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                      <span className="mr-2">{recipe.difficulty}</span>•
-                      <span className="mx-2">{recipe.time}</span>•
-                      <span className="ml-2">by {recipe.chef}</span>
-                    </div>
-                    <Link to={recipe.path}>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="w-full border-culinary-primary text-culinary-primary hover:bg-culinary-primary/10 mt-2"
-                      >
-                        View Recipe <ExternalLink className="ml-1 h-3 w-3" />
-                      </Button>
-                    </Link>
-                  </CardContent>
+                      <div className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                        <span className="mr-2">{recipe.difficulty}</span>•
+                        <span className="mx-2">{recipe.time}</span>•
+                        <span className="ml-2">by {recipe.chef}</span>
+                      </div>
+                    </CardContent>
+                  </Link>
                 </Card>
               ))}
             </div>

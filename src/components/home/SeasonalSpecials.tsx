@@ -1,11 +1,11 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SeasonalSpecials = () => {
+  const navigate = useNavigate();
   const seasonalItems = [
     {
       id: 1,
@@ -48,6 +48,10 @@ const SeasonalSpecials = () => {
       path: "/restaurants/summer-berry"
     }
   ];
+
+  const handleBookNow = (itemId: number) => {
+    navigate(`/booking?type=seasonal&id=${itemId}`);
+  };
 
   return (
     <section className="py-12 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
@@ -107,11 +111,12 @@ const SeasonalSpecials = () => {
                         </div>
                       ))}
                     </div>
-                    <Link to={item.path}>
-                      <Button className="w-full bg-culinary-primary text-white hover:bg-culinary-primary/90">
-                        View Details
-                      </Button>
-                    </Link>
+                    <Button 
+                      className="w-full bg-culinary-primary text-white hover:bg-culinary-primary/90"
+                      onClick={() => handleBookNow(item.id)}
+                    >
+                      Book Now
+                    </Button>
                   </CardContent>
                 </Card>
               </CarouselItem>
