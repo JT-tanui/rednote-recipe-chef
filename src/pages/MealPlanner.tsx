@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -16,7 +17,7 @@ const MealPlanner = () => {
   const [activeTab, setActiveTab] = useState('week-view');
 
   return (
-    <MainLayout>
+    <MainLayout hideHeader={false}>
       <div className="p-4 md:p-6 max-w-4xl mx-auto pb-20">
         {isMobile && (
           <header className="mb-6">

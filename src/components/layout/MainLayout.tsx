@@ -10,16 +10,17 @@ import Footer from './Footer';
 
 interface MainLayoutProps {
   children: ReactNode;
+  hideHeader?: boolean;
 }
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const MainLayout = ({ children, hideHeader = false }: MainLayoutProps) => {
   const isMobile = useIsMobile();
   
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
       <DesktopNavigation />
       
-      {isMobile && (
+      {isMobile && !hideHeader && (
         <header className="sticky top-0 z-40 w-full bg-white dark:bg-gray-800 border-b">
           <div className="flex items-center justify-between px-4 h-14">
             <h1 className="text-lg font-semibold text-culinary-primary">DineX</h1>

@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,6 +21,7 @@ import PaymentCheckout from "./pages/PaymentCheckout";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import Seasonal from "./pages/Seasonal";
 import Settings from "./pages/Settings";
+import Catering from "./pages/Catering";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +37,7 @@ const App = () => (
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipes/:id" element={<RecipeDetailPage />} />
           <Route path="/restaurants" element={<Restaurants />} />
+          <Route path="/restaurants/:id" element={<RecipeDetailPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/chefs" element={<Chefs />} />
@@ -42,6 +45,7 @@ const App = () => (
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/seasonal" element={<Seasonal />} />
+          <Route path="/catering" element={<Catering />} />
           
           {/* Booking Flow Routes */}
           <Route path="/booking" element={<BookingPage />} />
@@ -49,7 +53,7 @@ const App = () => (
           <Route path="/payment-checkout" element={<PaymentCheckout />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          {/* Catch-all route for 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
