@@ -1,4 +1,3 @@
-
 import {
   Carousel,
   CarouselContent,
@@ -8,8 +7,11 @@ import {
 } from "@/components/ui/carousel";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from "react-router-dom";
 
 const FeaturedRestaurants = () => {
+  const navigate = useNavigate();
+  
   const featuredRestaurants = [
     {
       id: 1,
@@ -19,7 +21,8 @@ const FeaturedRestaurants = () => {
       cuisine: "French",
       priceRange: "$$$",
       description: "Experience authentic French cuisine in an intimate setting",
-      featured: "Chef's Special: Coq au Vin"
+      featured: "Chef's Special: Coq au Vin",
+      path: "/restaurants/le-petit-bistro"
     },
     {
       id: 2,
@@ -29,7 +32,8 @@ const FeaturedRestaurants = () => {
       cuisine: "Japanese",
       priceRange: "$$$$",
       description: "Premium sushi and authentic Japanese dishes",
-      featured: "Omakase Experience"
+      featured: "Omakase Experience",
+      path: "/restaurants/sakura-japanese"
     },
     {
       id: 3,
@@ -39,9 +43,14 @@ const FeaturedRestaurants = () => {
       cuisine: "Italian",
       priceRange: "$$",
       description: "Rustic Italian cuisine in a garden setting",
-      featured: "Truffle Season Menu"
+      featured: "Truffle Season Menu",
+      path: "/restaurants/tuscan-garden"
     }
   ];
+
+  const handleReserveTable = (restaurantId: number) => {
+    navigate(`/booking?restaurant=${restaurantId}`);
+  };
 
   return (
     <section className="py-12 bg-white dark:bg-gray-900">
@@ -65,19 +74,23 @@ const FeaturedRestaurants = () => {
               <CarouselItem key={restaurant.id} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1">
                   <div className="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <div className="relative h-64">
-                      <img
-                        src={restaurant.image}
-                        alt={restaurant.name}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm py-1 px-2 rounded-full flex items-center">
-                        <Star className="h-4 w-4 text-yellow-400 fill-yellow-400 mr-1" />
-                        <span className="text-sm font-medium">{restaurant.rating}</span>
+                    <Link to={restaurant.path}>
+                      <div className="relative h-64">
+                        <img
+                          src={restaurant.image}
+                          alt={restaurant.name}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm py-1 px-2 rounded-full flex items-center">
+                          <Star className="h-4 w-4 text-yellow-400 fill-yellow-400 mr-1" />
+                          <span className="text-sm font-medium">{restaurant.rating}</span>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                     <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">{restaurant.name}</h3>
+                      <Link to={restaurant.path}>
+                        <h3 className="text-xl font-semibold mb-2">{restaurant.name}</h3>
+                      </Link>
                       <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-3">
                         <span>{restaurant.cuisine}</span>
                         <span className="mx-2">•</span>
@@ -89,7 +102,12 @@ const FeaturedRestaurants = () => {
                       <div className="bg-primary/5 rounded-lg p-3 mb-4">
                         <p className="text-primary font-medium">{restaurant.featured}</p>
                       </div>
-                      <Button className="w-full">Reserve a Table</Button>
+                      <Button 
+                        className="w-full"
+                        onClick={() => handleReserveTable(restaurant.id)}
+                      >
+                        Reserve a Table
+                      </Button>
                     </div>
                   </div>
                 </div>

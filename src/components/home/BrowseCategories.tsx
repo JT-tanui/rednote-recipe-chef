@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Utensils, Building2, Users, ShoppingBag } from 'lucide-react';
 
@@ -28,7 +29,7 @@ const BrowseCategories = () => {
       name: 'Catering',
       icon: <ShoppingBag className="h-6 w-6" />,
       description: 'Find catering services for events and parties',
-      link: '/catering',
+      link: '/booking',  // Since we don't have a specific catering page, redirect to booking
       color: 'bg-orange-500'
     }
   ];
