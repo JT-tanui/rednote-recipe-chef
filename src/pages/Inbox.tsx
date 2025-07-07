@@ -109,129 +109,156 @@ const Inbox = () => {
   
   return (
     <MainLayout>
-      <div className="container max-w-md mx-auto px-4 pt-5 pb-20">
-        {isMobile && (
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-lg font-bold">Inbox</h1>
-          </div>
-        )}
-        
-        <Tabs defaultValue="notifications" className="w-full">
-          <TabsList className="grid grid-cols-3 mb-6">
-            <TabsTrigger value="notifications" className="text-xs relative">
-              <Bell size={16} className="mr-1" />
-              Notifications
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-culinary-primary text-white text-xxs rounded-full flex items-center justify-center">
-                2
-              </span>
-            </TabsTrigger>
-            <TabsTrigger value="messages" className="text-xs relative">
-              <MessageSquare size={16} className="mr-1" />
-              Messages
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-culinary-primary text-white text-xxs rounded-full flex items-center justify-center">
-                2
-              </span>
-            </TabsTrigger>
-            <TabsTrigger value="activity" className="text-xs">
-              <Clock size={16} className="mr-1" />
-              Activity
-            </TabsTrigger>
-          </TabsList>
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
+        <div className={`${!isMobile ? 'max-w-4xl mx-auto p-8' : 'container max-w-md mx-auto px-4 pt-5'} pb-20`}>
+          {!isMobile && (
+            <header className="mb-10 text-center">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-primary to-primary/70 bg-clip-text text-transparent mb-3">
+                Inbox
+              </h1>
+              <p className="text-muted-foreground text-xl">Stay updated with your culinary journey</p>
+            </header>
+          )}
           
-          <TabsContent value="notifications">
-            <div className="space-y-4">
-              {notifications.map(notification => (
-                <div 
-                  key={notification.id}
-                  className={cn(
-                    "p-4 rounded-lg border",
-                    notification.read ? "bg-white dark:bg-gray-800" : "bg-blue-50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-800"
-                  )}
-                >
-                  <div className="flex">
-                    <div className={cn(
-                      "mr-3 p-2 rounded-full",
-                      notification.type === 'reservation' ? "bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400" :
-                      notification.type === 'chef' ? "bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400" :
-                      notification.type === 'recipe' ? "bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400" :
-                      "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
-                    )}>
-                      <notification.icon size={16} />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between">
-                        <h3 className="font-medium text-sm">{notification.title}</h3>
-                        <span className="text-xxs text-gray-500">{notification.time}</span>
+          {isMobile && (
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Inbox</h1>
+            </div>
+          )}
+          
+          <Tabs defaultValue="notifications" className="w-full">
+            <TabsList className={`grid grid-cols-3 mb-8 ${!isMobile ? 'h-14 p-1 bg-muted/50 backdrop-blur-sm' : 'h-12 mb-6'}`}>
+              <TabsTrigger 
+                value="notifications" 
+                className={`${!isMobile ? 'text-sm font-medium' : 'text-xs'} relative data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200`}
+              >
+                <Bell size={!isMobile ? 18 : 16} className="mr-2" />
+                Notifications
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center font-semibold">
+                  2
+                </span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="messages" 
+                className={`${!isMobile ? 'text-sm font-medium' : 'text-xs'} relative data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200`}
+              >
+                <MessageSquare size={!isMobile ? 18 : 16} className="mr-2" />
+                Messages
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center font-semibold">
+                  2
+                </span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="activity" 
+                className={`${!isMobile ? 'text-sm font-medium' : 'text-xs'} data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200`}
+              >
+                <Clock size={!isMobile ? 18 : 16} className="mr-2" />
+                Activity
+              </TabsTrigger>
+            </TabsList>
+          
+            <TabsContent value="notifications" className="animate-fade-in">
+              <div className={`space-y-${!isMobile ? '6' : '4'}`}>
+                {notifications.map((notification, index) => (
+                  <div 
+                    key={notification.id}
+                    className={cn(
+                      `p-${!isMobile ? '6' : '4'} rounded-xl border-2 transition-all duration-200 hover:shadow-lg hover:scale-[1.02] animate-fade-in`,
+                      notification.read 
+                        ? "bg-background/80 backdrop-blur-sm border-border hover:border-muted-foreground/20" 
+                        : "bg-primary/5 border-primary/20 hover:border-primary/30 shadow-sm"
+                    )}
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="flex">
+                      <div className={cn(
+                        `mr-${!isMobile ? '4' : '3'} p-3 rounded-full transition-colors`,
+                        notification.type === 'reservation' ? "bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400" :
+                        notification.type === 'chef' ? "bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400" :
+                        notification.type === 'recipe' ? "bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400" :
+                        "bg-muted text-muted-foreground"
+                      )}>
+                        <notification.icon size={!isMobile ? 20 : 16} />
                       </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">{notification.message}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="messages">
-            <div className="space-y-4">
-              {messages.map(message => (
-                <div 
-                  key={message.id}
-                  className={cn(
-                    "p-4 rounded-lg border flex items-start",
-                    message.unread > 0 ? "bg-blue-50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-800" : "bg-white dark:bg-gray-800"
-                  )}
-                >
-                  <Avatar className="h-10 w-10 mr-3">
-                    <img src={message.avatar} alt={message.sender} className="object-cover" />
-                  </Avatar>
-                  <div className="flex-1">
-                    <div className="flex justify-between items-center">
-                      <h3 className="font-medium text-sm">{message.sender}</h3>
-                      <span className="text-xxs text-gray-500">{message.time}</span>
-                    </div>
-                    <p className="text-xs text-gray-600 dark:text-gray-300 mt-1 line-clamp-2">{message.message}</p>
-                  </div>
-                  {message.unread > 0 && (
-                    <span className="ml-2 w-5 h-5 bg-culinary-primary text-white text-xxs rounded-full flex items-center justify-center">
-                      {message.unread}
-                    </span>
-                  )}
-                </div>
-              ))}
-              <button className="w-full py-2 text-xs text-culinary-primary font-medium">
-                View All Messages
-              </button>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="activity">
-            <div className="space-y-4">
-              {activities.map(activity => (
-                <div 
-                  key={activity.id}
-                  className="p-4 rounded-lg border bg-white dark:bg-gray-800"
-                >
-                  <div className="flex">
-                    <div className={cn(
-                      "mr-3 p-2 rounded-full",
-                      activity.status === 'completed' ? "bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400" : 
-                      "bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400"
-                    )}>
-                      <activity.icon size={16} />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between">
-                        <h3 className="font-medium text-sm">{activity.title}</h3>
-                        <span className="text-xxs text-gray-500">{activity.time}</span>
+                      <div className="flex-1">
+                        <div className="flex justify-between items-start">
+                          <h3 className={`font-semibold ${!isMobile ? 'text-base' : 'text-sm'} text-foreground`}>{notification.title}</h3>
+                          <span className={`${!isMobile ? 'text-sm' : 'text-xs'} text-muted-foreground font-medium`}>{notification.time}</span>
+                        </div>
+                        <p className={`${!isMobile ? 'text-sm' : 'text-xs'} text-muted-foreground mt-2 leading-relaxed`}>{notification.message}</p>
                       </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">{activity.description}</p>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
+                ))}
+              </div>
+            </TabsContent>
+          
+            <TabsContent value="messages" className="animate-fade-in">
+              <div className={`space-y-${!isMobile ? '6' : '4'}`}>
+                {messages.map((message, index) => (
+                  <div 
+                    key={message.id}
+                    className={cn(
+                      `p-${!isMobile ? '6' : '4'} rounded-xl border-2 flex items-start transition-all duration-200 hover:shadow-lg hover:scale-[1.02] animate-fade-in cursor-pointer`,
+                      message.unread > 0 
+                        ? "bg-primary/5 border-primary/20 hover:border-primary/30 shadow-sm" 
+                        : "bg-background/80 backdrop-blur-sm border-border hover:border-muted-foreground/20"
+                    )}
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <Avatar className={`${!isMobile ? 'h-12 w-12' : 'h-10 w-10'} mr-4 ring-2 ring-primary/10`}>
+                      <img src={message.avatar} alt={message.sender} className="object-cover" />
+                    </Avatar>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-center">
+                        <h3 className={`font-semibold ${!isMobile ? 'text-base' : 'text-sm'} text-foreground`}>{message.sender}</h3>
+                        <span className={`${!isMobile ? 'text-sm' : 'text-xs'} text-muted-foreground font-medium`}>{message.time}</span>
+                      </div>
+                      <p className={`${!isMobile ? 'text-sm' : 'text-xs'} text-muted-foreground mt-2 line-clamp-2 leading-relaxed`}>{message.message}</p>
+                    </div>
+                    {message.unread > 0 && (
+                      <span className="ml-3 w-6 h-6 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center font-semibold">
+                        {message.unread}
+                      </span>
+                    )}
+                  </div>
+                ))}
+                <button className={`w-full py-${!isMobile ? '4' : '3'} ${!isMobile ? 'text-sm' : 'text-xs'} text-primary font-semibold hover:bg-primary/10 rounded-lg transition-colors duration-200`}>
+                  View All Messages
+                </button>
+              </div>
+            </TabsContent>
+          
+            <TabsContent value="activity" className="animate-fade-in">
+              <div className={`space-y-${!isMobile ? '6' : '4'}`}>
+                {activities.map((activity, index) => (
+                  <div 
+                    key={activity.id}
+                    className={`p-${!isMobile ? '6' : '4'} rounded-xl border-2 bg-background/80 backdrop-blur-sm border-border hover:border-muted-foreground/20 transition-all duration-200 hover:shadow-lg hover:scale-[1.02] animate-fade-in`}
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="flex">
+                      <div className={cn(
+                        `mr-${!isMobile ? '4' : '3'} p-3 rounded-full transition-colors`,
+                        activity.status === 'completed' ? "bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400" : 
+                        "bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400"
+                      )}>
+                        <activity.icon size={!isMobile ? 20 : 16} />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex justify-between items-start">
+                          <h3 className={`font-semibold ${!isMobile ? 'text-base' : 'text-sm'} text-foreground`}>{activity.title}</h3>
+                          <span className={`${!isMobile ? 'text-sm' : 'text-xs'} text-muted-foreground font-medium`}>{activity.time}</span>
+                        </div>
+                        <p className={`${!isMobile ? 'text-sm' : 'text-xs'} text-muted-foreground mt-2 leading-relaxed`}>{activity.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </MainLayout>
   );

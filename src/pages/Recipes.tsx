@@ -74,55 +74,74 @@ const Recipes = () => {
   
   return (
     <MainLayout>
-      <div className={`p-4 md:p-6 ${!isMobile ? "max-w-5xl mx-auto" : ""}`}>
-        {isMobile && (
-          <header className="mb-6">
-            <h1 className="text-xl font-bold">Recipe Collection</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Discover and save your favorite recipes</p>
-          </header>
-        )}
-        
-        <div className="flex space-x-2 mb-6">
-          <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <Input 
-              placeholder="Search recipes..." 
-              className="pl-9 h-10 text-sm"
-            />
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
+        <div className={`p-4 md:p-8 ${!isMobile ? "max-w-7xl mx-auto" : ""}`}>
+          {!isMobile && (
+            <header className="mb-10 text-center">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-primary to-primary/70 bg-clip-text text-transparent mb-3">
+                Recipe Collection
+              </h1>
+              <p className="text-muted-foreground text-xl">Discover culinary masterpieces from around the world</p>
+            </header>
+          )}
+          
+          {isMobile && (
+            <header className="mb-6">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Recipe Collection</h1>
+              <p className="text-sm text-muted-foreground mt-1">Discover and save your favorite recipes</p>
+            </header>
+          )}
+          
+          <div className="flex space-x-3 mb-8">
+            <div className="relative flex-1">
+              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <Input 
+                placeholder="Search recipes, ingredients, chefs..." 
+                className={`pl-12 ${!isMobile ? 'h-12 text-base' : 'h-11 text-sm'} bg-background/80 backdrop-blur-sm border-2 border-transparent focus:border-primary transition-all duration-200`}
+              />
+            </div>
+            <Button 
+              variant="outline" 
+              size={!isMobile ? "default" : "icon"} 
+              className={`${!isMobile ? 'h-12 px-6' : 'h-11 w-11'} bg-background/80 backdrop-blur-sm border-2 hover:border-primary transition-all duration-200`}
+            >
+              <Filter size={18} />
+              {!isMobile && <span className="ml-2">Filters</span>}
+            </Button>
           </div>
-          <Button variant="outline" size="icon" className="h-10 w-10">
-            <Filter size={16} />
-          </Button>
-        </div>
-        
-        <div className="mb-6 overflow-x-auto">
-          <div className="flex space-x-2 pb-2">
-            {cuisineFilters.map(cuisine => (
-              <Badge 
-                key={cuisine} 
-                variant="outline" 
-                className="cursor-pointer hover:bg-primary hover:text-white transition-colors py-1"
-              >
-                {cuisine}
-              </Badge>
+          
+          <div className="mb-8 overflow-x-auto">
+            <div className="flex space-x-3 pb-2">
+              {cuisineFilters.map(cuisine => (
+                <Badge 
+                  key={cuisine} 
+                  variant="outline" 
+                  className="cursor-pointer hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-200 py-2 px-4 text-sm font-medium whitespace-nowrap"
+                >
+                  {cuisine}
+                </Badge>
+              ))}
+            </div>
+          </div>
+          
+          <div className={`grid ${!isMobile ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8' : 'grid-cols-1 gap-6'} animate-fade-in`}>
+            {mockRecipes.map((recipe, index) => (
+              <div key={recipe.id} className="animate-fade-in hover-scale" style={{ animationDelay: `${index * 100}ms` }}>
+                <Link to={`/recipes/${recipe.id}`} className="block">
+                  <RecipeCard {...recipe} />
+                </Link>
+              </div>
             ))}
           </div>
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {mockRecipes.map(recipe => (
-            <div key={recipe.id}>
-              <Link to={`/recipes/${recipe.id}`}>
-                <RecipeCard {...recipe} />
-              </Link>
-            </div>
-          ))}
-        </div>
-        
-        <div className="mt-8 text-center">
-          <Button className="bg-culinary-primary text-white hover:bg-culinary-primary/90">
-            Load More Recipes
-          </Button>
+          
+          <div className="mt-12 text-center">
+            <Button 
+              size={!isMobile ? "lg" : "default"} 
+              className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              Load More Recipes
+            </Button>
+          </div>
         </div>
       </div>
     </MainLayout>
